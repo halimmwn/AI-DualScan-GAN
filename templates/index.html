@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DualScan AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <style>
+        /* Custom responsive styles */
+        @media (max-width: 768px) {
+            .services-grid {
+                grid-template-columns: 1fr !important;
+            }
+            .camera-layout {
+                grid-template-columns: 1fr !important;
+            }
+            .steps-grid {
+                grid-template-columns: 1fr !important;
+            }
+            .modal-content {
+                margin: 1rem !important;
+                width: calc(100% - 2rem) !important;
+            }
+            .modal-content.large {
+                max-width: calc(100% - 2rem) !important;
+            }
+        }
+        
+        @media (max-width: 1024px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="logo-container">
+                <div class="logo-icon">
+                    <i data-feather="activity"></i>
+                </div>
+                <h1 class="logo-text">DualScan AI</h1>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <h1 class="hero-title">DualScan AI </h1>
+                <p class="hero-subtitle">Deteksi kondisi tulang dan kulit dengan teknologi kecerdasan buatan</p>
+            </section>
+
+            <!-- Services Grid -->
+            <div class="services-grid">
+                <!-- X-Ray Card -->
+                <div class="service-card">
+                    <div class="service-header">
+                        <div class="service-icon xray">
+                            <i data-feather="x"></i>
+                        </div>
+                        <h2 class="service-title">Analisis X-Ray</h2>
+                    </div>
+                    <p class="service-description">Upload foto X-Ray untuk analisis fraktur tulang dengan detail lengkap</p>
+                    <button onclick="openUploadModal('xray')" class="service-button xray">
+                        <i data-feather="upload"></i>
+                        Upload X-Ray
+                    </button>
+                </div>
+
+                <!-- MRI Card -->
+                <div class="service-card">
+                    <div class="service-header">
+                        <div class="service-icon mri">
+                            <i data-feather="activity"></i>
+                        </div>
+                        <h2 class="service-title">Analisis MRI</h2>
+                    </div>
+                    <p class="service-description">Upload scan MRI untuk pemeriksaan detail fraktur tulang</p>
+                    <button onclick="openUploadModal('mri')" class="service-button mri">
+                        <i data-feather="upload"></i>
+                        Upload MRI
+                    </button>
+                </div>
+
+                <!-- Skin Live Card -->
+                <div class="service-card">
+                    <div class="service-header">
+                        <div class="service-icon skin-live">
+                            <i data-feather="video"></i>
+                        </div>
+                        <h2 class="service-title">Analisis Kulit Live</h2>
+                    </div>
+                    <p class="service-description">Deteksi scabies secara real-time dengan kamera</p>
+                    <button onclick="openCameraModal()" class="service-button skin-live">
+                        <i data-feather="camera"></i>
+                        Buka Kamera
+                    </button>
+                </div>
+
+                <!-- Skin Upload Card -->
+                <div class="service-card">
+                    <div class="service-header">
+                        <div class="service-icon skin-upload">
+                            <i data-feather="image"></i>
+                        </div>
+                        <h2 class="service-title">Analisis Kulit</h2>
+                    </div>
+                    <p class="service-description">Upload foto kulit untuk deteksi scabies dengan penjelasan detail</p>
+                    <button onclick="openUploadModal('skin')" class="service-button skin-upload">
+                        <i data-feather="upload"></i>
+                        Upload Foto
+                    </button>
+                </div>
+            </div>
+
+            <!-- How It Works -->
+            <section class="how-it-works">
+                <h2 class="section-title">Cara Kerja</h2>
+                <div class="steps-grid">
+                    <div class="step-card">
+                        <div class="step-icon">
+                            <i data-feather="upload"></i>
+                        </div>
+                        <h3 class="step-title">Upload Gambar</h3>
+                        <p class="step-description">Pilih gambar medis dari perangkat Anda</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-icon">
+                            <i data-feather="cpu"></i>
+                        </div>
+                        <h3 class="step-title">Analisis AI</h3>
+                        <p class="step-description">AI menganalisis gambar secara otomatis</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-icon">
+                            <i data-feather="file-text"></i>
+                        </div>
+                        <h3 class="step-title">Dapatkan Hasil</h3>
+                        <p class="step-description">Terima laporan analisis dan rekomendasi detail</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Upload Modal -->
+    <div id="uploadModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Upload Gambar</h3>
+                <button onclick="closeUploadModal()" class="modal-close">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="upload-zone">
+                    <div class="upload-icon">
+                        <i data-feather="upload-cloud"></i>
+                    </div>
+                    <h4 class="upload-title">Pilih File Gambar</h4>
+                    <p class="upload-subtitle">Format: JPG, PNG (Maks. 10MB)</p>
+                    
+                    <input type="file" id="fileInput" class="file-input-hidden" accept="image/*">
+                    <button onclick="document.getElementById('fileInput').click()" class="upload-primary-btn">
+                        <i data-feather="folder"></i>
+                        Pilih File
+                    </button>
+                    
+                    <p class="upload-info">Seret file ke sini</p>
+                </div>
+                
+                <div id="previewContainer" class="preview-container">
+                    <div class="preview-header">
+                        <h5>Pratinjau Gambar</h5>
+                        <button onclick="clearPreview()" class="preview-close">
+                            <i data-feather="x"></i>
+                        </button>
+                    </div>
+                    <img id="imagePreview" class="image-preview">
+                    <div class="preview-actions">
+                        <button onclick="analyzeImage()" class="analyze-btn">
+                            <i data-feather="play"></i>
+                            Analisis Sekarang
+                        </button>
+                        <button onclick="clearPreview()" class="change-btn">
+                            <i data-feather="refresh-cw"></i>
+                            Ganti Gambar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Camera Modal -->
+    <div id="cameraModal" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h3>Analisis Kulit Live</h3>
+                <button onclick="closeCameraModal()" class="modal-close">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="camera-layout">
+                    <div class="camera-section">
+                        <div class="camera-container">
+                            <video id="cameraFeed" autoplay playsinline></video>
+                            <canvas id="cameraCanvas" style="display: none;"></canvas>
+                            <div id="cameraPlaceholder" class="camera-placeholder">
+                                <i data-feather="video" class="placeholder-icon"></i>
+                                <p>Kamera siap digunakan</p>
+                            </div>
+                        </div>
+
+                        <div class="camera-selection">
+                            <label for="cameraSelect" class="select-label">Pilih Kamera:</label>
+                            <select id="cameraSelect" class="camera-select">
+                                <option value="">Mendeteksi kamera...</option>
+                            </select>
+                        </div>
+
+                        <div class="camera-controls">
+                            <button id="startCamera" onclick="startCamera()" class="btn start">
+                                <i data-feather="video"></i> Mulai Kamera
+                            </button>
+                            <button id="captureImage" onclick="captureImage()" class="btn capture" style="display: none;">
+                                <i data-feather="camera"></i> Ambil & Analisis
+                            </button>
+                            <button id="stopCamera" onclick="stopCamera()" class="btn stop" style="display: none;">
+                                <i data-feather="square"></i> Stop Kamera
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="results-section">
+                        <h4>Hasil Analisis</h4>
+                        <div id="analysisResults" class="results">
+                            <div class="no-results-state">
+                                <i data-feather="bar-chart-2" class="no-results-icon"></i>
+                                <p>Belum ada analisis</p>
+                                <span>Hasil akan muncul di sini setelah analisis</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 DualScan AI. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
