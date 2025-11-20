@@ -1,4 +1,4 @@
-# DualScan-AI-GAN
+# DualScan-AI-GAN Kel 5
 
 DualScan-AI-GAN adalah proyek deep learning yang menggabungkan teknik Super-Resolution, GAN-based enhancement, dan Object Detection untuk membantu analisis citra medis seperti MRI serta deteksi penyakit kulit dan scabies.  
 Proyek ini mencakup beberapa komponen utama:
@@ -30,4 +30,5 @@ Link Runs Hasil Training dari Yolo
 ```bash
 pip install -r requirements.txt
 python app.py
+
 
